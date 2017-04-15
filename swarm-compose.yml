@@ -41,6 +41,7 @@ services:
 
   zookeeper:
     image: zookeeper:3.4
+    hostname: zookeeper
     networks:
       - cini
     deploy:
@@ -51,6 +52,7 @@ services:
   storm-nimbus:
     image: storm:1.0.3
     command: bash -c "storm nimbus"
+    hostname: nimbus
     networks:
       - cini
     depends_on:
