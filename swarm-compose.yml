@@ -41,7 +41,6 @@ services:
 
   zookeeper:
     image: zookeeper:3.4
-    hostname: zookeeper
     networks:
       - cini
     deploy:
@@ -49,10 +48,9 @@ services:
         constraints: [node.role == manager]
 
 
-  storm-nimbus:
+  nimbus:
     image: storm:1.0.3
     command: bash -c "storm nimbus"
-    hostname: nimbus
     networks:
       - cini
     depends_on:
@@ -68,12 +66,12 @@ services:
       - cini
     depends_on:
       - zookeeper
-      - storm-nimbus
+      - nimbus
       - rabbit
       - rabbit_dashboard
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 2
       placement:
         constraints: [node.role == worker]
 
@@ -95,7 +93,7 @@ services:
     ports:
       - "8000:8080" #storm UI
     depends_on:
-      - storm-nimbus
+      - nimbus
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -104,11 +102,11 @@ services:
     image: storm:1.0.3
     command: bash -c "storm jar /CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar org.uniroma2.sdcc.AnomaliesDetectionTopology"
     volumes:
-      - "home/docker/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar:/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar"
+      - "/home/docker/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar:/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar"
     networks:
       - cini
     depends_on:
-      - storm-nimbus
+      - nimbus
 
 
 networks:
