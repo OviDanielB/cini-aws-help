@@ -71,7 +71,7 @@ services:
       - rabbit_dashboard
     deploy:
       mode: replicated
-      replicas: 2
+      replicas:
       placement:
         constraints: [node.role == worker]
 
