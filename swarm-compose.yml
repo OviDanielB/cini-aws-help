@@ -5,7 +5,7 @@ services:
   rabbit:
     image: rabbitmq:alpine
     hostname: rabbit1
-    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
+#    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
     ports:
@@ -13,12 +13,15 @@ services:
       - "1883:1883"
       - "8883:8883"
       - "15672:15672" #rabbit UI
+    deploy:
+      placement:
+        constraints: [node.role == manager]
 
 
   rabbit_dashboard:
     image: rabbitmq:alpine
     hostname: rabbit2
-    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
+#    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
     ports:
@@ -26,6 +29,9 @@ services:
       - "1884:1883"
       - "8884:8883"
       - "15673:15672" #rabbit UI
+    deploy:
+      placement:
+        constraints: [node.role == manager]
 
   memc:
     image: memcached:alpine
@@ -93,35 +99,35 @@ services:
       placement:
         constraints: [node.role == manager]
 
-#  storm-submitter:
-#    image: storm:1.0.3
-#    command: bash -c "storm jar /CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar org.uniroma2.sdcc.AnomaliesDetectionTopology"
-#    volumes:
-#      - "/home/docker/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar:/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar"
-#    networks:
-#      - cini
-#    depends_on:
-#      - nimbus
-
-  redis:
-    image: redis:alpine
-    networks:
-      - cini
-    ports:
-      - "6379:6379"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-
-  dashboard:
-    image: node:alpine
-#    command: bash -c "cd /dashboard && npm install && node server.js"
-#    volumes:
-#      - "/home/docker/dashboard:/dashboard"
+  storm-submitter:
+    image: storm:1.0.3
+    command: bash -c "storm jar /CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar org.uniroma2.sdcc.AnomaliesDetectionTopology"
+    volumes:
+      - "/home/docker/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar:/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar"
     networks:
       - cini
     depends_on:
-      - redis
+      - nimbus
+
+#  redis:
+#    image: redis:alpine
+#    networks:
+#      - cini
+#    ports:
+#      - "6379:6379"
+#    deploy:
+#      placement:
+#        constraints: [node.role == manager]
+
+#  dashboard:
+#    image: node:alpine
+#    command: bash -c "cd /dashboard && npm install && node server.js"
+#    volumes:
+#      - "/home/docker/dashboard:/dashboard"
+#    networks:
+#      - cini
+#    depends_on:
+#      - redis
 
 
 networks:
