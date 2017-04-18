@@ -12,7 +12,7 @@ services:
       - "5672:5672"
       - "1883:1883"
       - "8883:8883"
-      - "15672:15672" #rabbit UI
+      - "15672:15672"  #rabbit UI
     deploy:
       placement:
         constraints: [node.role == manager]
