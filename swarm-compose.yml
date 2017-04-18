@@ -5,7 +5,7 @@ services:
   rabbit:
     image: rabbitmq:alpine
     hostname: rabbit1
-    command: rabbitmq-plugins enable rabbitmq_management
+    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
     ports:
@@ -13,14 +13,12 @@ services:
       - "1883:1883"
       - "8883:8883"
       - "15672:15672" #rabbit UI
-    deploy:
-      placement:
-        constraints: [node.role == worker]
+
 
   rabbit_dashboard:
     image: rabbitmq:alpine
     hostname: rabbit2
-    command: rabbitmq-plugins enable rabbitmq_management
+    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
     ports:
@@ -28,9 +26,6 @@ services:
       - "1884:1883"
       - "8884:8883"
       - "15673:15672" #rabbit UI
-    deploy:
-      placement:
-        constraints: [node.role == worker]
 
   memc:
     image: memcached:alpine
@@ -44,6 +39,8 @@ services:
     networks:
       - cini
     deploy:
+      mode: replicated
+      replicas: 2
       placement:
         constraints: [node.role == manager]
 
@@ -71,9 +68,7 @@ services:
       - rabbit_dashboard
     deploy:
       mode: replicated
-      replicas: 2
-      placement:
-        constraints: [node.role == worker]
+      replicas: 4
 
   visualizer:
     image: dockersamples/visualizer:stable
@@ -107,6 +102,26 @@ services:
       - cini
     depends_on:
       - nimbus
+
+  redis:
+    image: redis:alpine
+    networks:
+      - cini
+    ports:
+      - "6379:6379"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  dashboard:
+    image: node:alpine
+    command: bash -c "cd /dashboard && npm install && node server.js"
+    volumes:
+      - "/home/docker/dashboard:/dashboard"
+    networks:
+      - cini
+    depends_on:
+      - redis
 
 
 networks:
