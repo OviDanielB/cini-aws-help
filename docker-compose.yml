@@ -1,0 +1,101 @@
+# rabbit queue
+version: "2"
+services:
+
+  rabbit:
+    image: rabbitmq:alpine
+    hostname: rabbit1
+    command: rabbitmq-plugins enable rabbitmq_management
+    cpu_shares: 256
+    mem_limit: 262144000 # 256MB
+    ports:
+      - "5672:5672"
+      - "1883:1883"
+      - "8883:8883"
+      - "15672:15672" #rabbit UI
+    restart: always
+
+  rabbit_dashboard:
+    image: rabbitmq:alpine
+    hostname: rabbit2
+    command: rabbitmq-plugins enable rabbitmq_management
+    cpu_shares: 256
+    mem_limit: 262144000 # 256MB
+    ports:
+      - "5673:5672"
+      - "1884:1883"
+      - "8884:8883"
+      - "15673:15672" #rabbit UI
+    restart: always
+
+  memc:
+    image: memcached:alpine
+    mem_limit: 131072000 #128 MB
+    cpu_shares: 256
+    restart: always
+    ports:
+      - "11211:11211"
+
+  zookeeper:
+    image: zookeeper:3.4
+    cpu_shares: 256
+    mem_limit: 262144000 # 256MB
+    restart: always
+
+
+  storm-nimbus:
+    image: storm:1.0.3
+    command: bash -c "storm nimbus"
+    mem_limit: 262144000 # 256MB
+    cpu_shares: 256
+    restart: always
+    links:
+      - "zookeeper:zookeeper"
+
+  supervisor1:
+    image: storm:1.0.3
+    command: bash -c "storm supervisor"
+    cpu_shares: 256
+    mem_limit: 262144000 # 256MB
+    restart: always
+    links:
+      - "zookeeper:zookeeper"
+      - "storm-nimbus:nimbus"
+      - "rabbit:rabbit"
+      - "rabbit_dashboard:rabbit_dashboard"
+
+
+  supervisor2:
+    image: storm:1.0.3
+    command: bash -c "storm supervisor"
+    cpu_shares: 256
+    mem_limit: 262144000 # 256MB
+    restart: always
+    links:
+      - "zookeeper:zookeeper"
+      - "storm-nimbus:nimbus"
+      - "rabbit:rabbit"
+      - "rabbit_dashboard:rabbit_dashboard"
+
+  supervisor3:
+    image: storm:1.0.3
+    command: bash -c "storm supervisor"
+    cpu_shares: 256
+    mem_limit: 262144000 # 256MB
+    restart: always
+    links:
+      - "zookeeper:zookeeper"
+      - "storm-nimbus:nimbus"
+      - "rabbit:rabbit"
+      - "rabbit_dashboard:rabbit_dashboard"
+
+  storm-ui:
+    image: storm:1.0.3
+    command: bash -c "storm ui"
+    cpu_shares: 100
+    mem_limit: 262144000 # 256MB
+    restart: always
+    ports:
+      - "8080:8080" #storm UI
+    links:
+      - "storm-nimbus:nimbus"
