@@ -39,8 +39,8 @@ services:
     networks:
       - cini
     deploy:
-      mode: replicated
-      replicas: 2
+#      mode: replicated
+#      replicas: 2
       placement:
         constraints: [node.role == manager]
 
@@ -93,15 +93,15 @@ services:
       placement:
         constraints: [node.role == manager]
 
-  storm-submitter:
-    image: storm:1.0.3
-    command: bash -c "storm jar /CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar org.uniroma2.sdcc.AnomaliesDetectionTopology"
-    volumes:
-      - "/home/docker/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar:/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar"
-    networks:
-      - cini
-    depends_on:
-      - nimbus
+#  storm-submitter:
+#    image: storm:1.0.3
+#    command: bash -c "storm jar /CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar org.uniroma2.sdcc.AnomaliesDetectionTopology"
+#    volumes:
+#      - "/home/docker/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar:/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar"
+#    networks:
+#      - cini
+#    depends_on:
+#      - nimbus
 
   redis:
     image: redis:alpine
@@ -115,9 +115,9 @@ services:
 
   dashboard:
     image: node:alpine
-    command: bash -c "cd /dashboard && npm install && node server.js"
-    volumes:
-      - "/home/docker/dashboard:/dashboard"
+#    command: bash -c "cd /dashboard && npm install && node server.js"
+#    volumes:
+#      - "/home/docker/dashboard:/dashboard"
     networks:
       - cini
     depends_on:
