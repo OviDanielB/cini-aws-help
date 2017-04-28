@@ -2,17 +2,17 @@
 version: "3"
 services:
 
-  node:
-    image: node:6.10
-    command: bash -c "npm start"
-    hostname: parking
-    networks:
-      - cini
-    ports:
-      - "3000:3000"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
+#  node:
+#    image: node:6.10
+#    command: bash -c "npm start"
+#    hostname: parking
+#    networks:
+#      - cini
+#    ports:
+#      - "3000:3000"
+#    deploy:
+#      placement:
+#        constraints: [node.role == manager]
  
   rabbit:
     image: rabbitmq:alpine
