@@ -2,8 +2,9 @@
 version: "3"
 services:
 
-  parking:
-    image: server_parking:latest
+  node:
+    image: node:6.10
+    command: bash -c "npm start"
     hostname: parking
     networks:
       - cini
