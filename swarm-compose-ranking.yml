@@ -3,7 +3,7 @@ version: "3"
 services:
 
   parking:
-    image: node:6.10
+    image: server_parking
     hostname: parking
     networks:
       - cini
@@ -12,7 +12,7 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
-  
+ 
   rabbit:
     image: rabbitmq:alpine
     hostname: rabbit1
