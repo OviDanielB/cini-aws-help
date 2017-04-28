@@ -2,6 +2,17 @@
 version: "3"
 services:
 
+  parking:
+    image: node:6.10
+    hostname: parking
+    networks:
+      - cini
+    ports:
+      -"3000:3000"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+  
   rabbit:
     image: rabbitmq:alpine
     hostname: rabbit1
@@ -37,6 +48,7 @@ services:
     image: memcached:alpine
     networks:
       - cini
+    hostname: memc
     ports:
       - "11211:11211"
 
@@ -110,7 +122,7 @@ services:
     depends_on:
       - nimbus
       
-networks
+networks:
     cini:
 
 #  redis:
