@@ -3,7 +3,7 @@ version: "3"
 services:
 
   parking:
-    image: server_parking
+    image: server_parking:latest
     hostname: parking
     networks:
       - cini
