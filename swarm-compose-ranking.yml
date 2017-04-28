@@ -109,6 +109,9 @@ services:
       - cini
     depends_on:
       - nimbus
+      
+  networks:
+    cini:
 
 #  redis:
 #    image: redis:alpine
@@ -129,7 +132,3 @@ services:
 #      - cini
 #    depends_on:
 #      - redis
-
-
-networks:
-  cini:
