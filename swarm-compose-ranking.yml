@@ -111,7 +111,7 @@ services:
       - nimbus
       
 networks:
-  - cini
+  cini:
 
 #  redis:
 #    image: redis:alpine
