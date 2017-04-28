@@ -110,8 +110,8 @@ services:
     depends_on:
       - nimbus
       
-networks:
-  cini:
+networks
+    cini:
 
 #  redis:
 #    image: redis:alpine
