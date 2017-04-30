@@ -33,12 +33,12 @@ services:
       placement:
         constraints: [node.role == manager]
 
-  memc:
-    image: memcached:alpine
-    networks:
-      - cini
-    ports:
-      - "11211:11211"
+  # memc:
+  #   image: memcached:alpine
+  #   networks:
+  #     - cini
+  #   ports:
+  #     - "11211:11211"
 
   zookeeper:
     image: zookeeper:3.4
