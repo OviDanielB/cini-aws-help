@@ -5,7 +5,7 @@ services:
   rabbit:
     image: rabbitmq:alpine
     hostname: rabbit1
-#    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
+    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
     ports:
@@ -21,7 +21,7 @@ services:
   rabbit_dashboard:
     image: rabbitmq:alpine
     hostname: rabbit2
-#    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
+    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
     ports:
