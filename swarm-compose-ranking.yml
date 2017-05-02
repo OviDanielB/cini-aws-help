@@ -3,11 +3,10 @@ version: "3"
 services:
 
   node:
-    image: node
-    # command: bash -c "npm start"
-    hostname: parking
+    image: node:6.10
     networks:
       - cini
+    hostname: parking
     ports:
       - "3000:3000"
  
