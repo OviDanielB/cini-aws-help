@@ -1,20 +1,15 @@
 # rabbit queue
 version: "3"
 services:
-  web:
-    #build: ./ParkingREST_API
-    environment:
-      NODE_ENV: production
-    ports:
-      - "3000:3000"
 
-  #node:
-  #  image: node:6.10
-   # networks:
-    #  - cini
-    #hostname: parking
-    #ports:
-    #  - "3000:3000"
+
+  parking:
+    image: node:alpine
+    command: bash -c "cd /ParkingREST_API && npm install && node server_parking.js"#
+#    volumes:
+#      - "/home/docker/dashboard:/dashboard"
+    networks:
+      - cini
  
   rabbit:
     image: rabbitmq:alpine
