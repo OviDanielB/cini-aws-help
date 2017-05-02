@@ -10,9 +10,6 @@ services:
       - cini
     ports:
       - "3000:3000"
-    deploy:
-      placement:
-        constraints: [node.role == manager]
  
   rabbit:
     image: rabbitmq:alpine
