@@ -7,7 +7,7 @@ services:
     image: node:alpine
     command: bash -c "cd /ParkingREST_API && npm install && node server_parking.js"#
 #    volumes:
-#      - "/home/docker/dashboard:/dashboard"
+#      - "/home/docker/parking:/parking"
     networks:
       - cini
  
