@@ -4,7 +4,7 @@ services:
 
   node:
     image: node:6.10
-    command: bash -c "npm start"
+    # command: bash -c "npm start"
     hostname: parking
     networks:
       - cini
@@ -115,7 +115,7 @@ services:
 
   storm-submitter:
     image: storm:1.0.3
-    command: bash -c "storm jar /CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar org.uniroma2.sdcc.RankingTopology"
+    command: bash -c "storm jar /CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar org.uniroma2.sdcc.RankingOldestLampsTopology"
     volumes:
       - "/home/docker/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar:/CINI_SmartLightingSystem-1.0-jar-with-dependencies.jar"
     networks:
