@@ -2,7 +2,7 @@
 version: "3"
 services:
   web:
-    build: ./ParkingREST_API
+    #build: ./ParkingREST_API
     environment:
       NODE_ENV: production
     ports:
