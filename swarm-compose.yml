@@ -105,7 +105,7 @@ services:
 
   storm-submitter:
     image: storm:1.0.3
-    command: bash -c "storm jar /stat.jar org.uniroma2.sdcc.ConsumptionStatisticsTopology "
+    command: bash -c "storm jar /stat.jar org.uniroma2.sdcc.ConsumptionStatisticsTopology  "
     volumes:
       - "/home/docker/stat.jar:/stat.jar"
     networks:
