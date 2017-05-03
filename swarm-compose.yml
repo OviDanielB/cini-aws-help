@@ -105,9 +105,9 @@ services:
 
   storm-submitter:
     image: storm:1.0.3
-    command: bash -c "storm jar /anomaly.jar org.uniroma2.sdcc.AnomaliesDetectionTopology "
+    command: bash -c "storm jar /stat.jar org.uniroma2.sdcc.ConsumptionStatisticsTopology "
     volumes:
-      - "/home/docker/anomaly.jar:/anomaly.jar"
+      - "/home/docker/stat.jar:/stat.jar"
     networks:
       - cini
     depends_on:
