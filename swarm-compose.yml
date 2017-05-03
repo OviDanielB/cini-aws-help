@@ -105,9 +105,9 @@ services:
 
   storm-submitter:
     image: storm:1.0.3
-    command: bash -c "storm jar /stat.jar org.uniroma2.sdcc.ConsumptionStatisticsTopology  "
+    command: bash -c "storm jar /rank.jar org.uniroma2.sdcc.RankingOldestLampsTopology  "
     volumes:
-      - "/home/docker/stat.jar:/stat.jar"
+      - "/home/docker/rank.jar:/rank.jar"
     networks:
       - cini
     depends_on:
