@@ -4,7 +4,7 @@ services:
 
   rabbit:
     image: rabbitmq:alpine
-    hostname: rabbit1
+    hostname: rabbit
 #    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
@@ -20,7 +20,7 @@ services:
 
   rabbit_dashboard:
     image: rabbitmq:alpine
-    hostname: rabbit2
+    hostname: rabbit_dashboard
 #    command: bash -c "rabbitmq-plugins enable rabbitmq_management"
     networks:
       - cini
@@ -35,6 +35,7 @@ services:
 
   memc:
     image: memcached:alpine
+    hostname: memc
     networks:
       - cini
     ports:
@@ -42,6 +43,7 @@ services:
 
   zookeeper:
     image: zookeeper:3.4
+    hostname: zookeeper
     networks:
       - cini
     deploy:
@@ -53,6 +55,7 @@ services:
 
   nimbus:
     image: storm:1.0.3
+    hostname: nimbus
     command: bash -c "storm nimbus"
     networks:
       - cini
